@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 function Navigation() {
     return (
         <div className="divLink">
-            1. <Link to="/binarysearch">The binary search</Link>
+            <Link to="/search/simple">1. The simple search</Link>
+            <Link to="/search/binary">2. The binary search</Link>
         </div>
     )
 }

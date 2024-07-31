@@ -1,20 +1,31 @@
 import React, { MutableRefObject, SyntheticEvent, useState } from "react";
 import { useRef } from "react";
+import { useParams } from "react-router-dom";
 
-function binarySearch(arr: number[], item: number) {
+function binarySearch(arr: number[], item: number): number {
     let low = 0;
     let high = arr.length - 1;
     while(low <= high) {
         const mid = Math.floor((low + high) / 2);
         const guess = arr[mid];
+        console.log(mid);
         if (guess === item) return mid;
         if (guess < item) low = mid + 1;
-        if (guess > item) high = mid - 1;
+        if (guess > item) high  = mid - 1;
     };
     return -1;
 }
 
-function BinarySearch () {
+function simpleSearch(arr: number[], item: number) : number {
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] === item) return i;
+        console.log(i);
+    };
+    return -1;
+}
+
+function Search () {
+    const param = useParams();
     const array: MutableRefObject<HTMLInputElement> = useRef();
     const number: MutableRefObject<HTMLInputElement> = useRef();
     const [index, setIndex] = useState<number>();
@@ -24,8 +35,13 @@ function BinarySearch () {
         if (array && number) {
             const arr = array.current.value.split(',')
                 .map((item) => Number(item));
-            const position = binarySearch(arr, Number(number.current.value));
-            setIndex(position);
+            if (param.id === "binary") {
+                const position = binarySearch(arr, Number(number.current.value));
+                setIndex(position);
+            } else {
+                const position = simpleSearch(arr, Number(number.current.value));
+                setIndex(position);
+            };
         };
     }
 
@@ -47,4 +63,4 @@ function BinarySearch () {
     )
 }
 
-export default BinarySearch;
+export default Search;
