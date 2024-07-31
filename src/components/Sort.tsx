@@ -4,31 +4,51 @@ import React, {
   useRef,
   useState,
 } from "react";
+import { useParams } from "react-router-dom";
 
 function selectedSort(arr: number[]): string {
   for (let i = 0; i < arr.length; i++) {
     let min = i;
     for (let j = i + 1; j < arr.length; j++) {
       if (arr[min] > arr[j]) min = j;
-      console.log(min);
     }
     [arr[i], arr[min]] = [arr[min], arr[i]];
     console.log(arr);
   }
   return arr.join(",");
+};
+
+function quickSort(arr: number[]): string {
+  if (arr.length <= 1) return arr.join(',');
+  const pivot = arr[0];
+  const left = [];
+  const right = [];
+  for (let i = 1; i < arr.length; i++) {
+    arr[i] < pivot ? left.push(arr[i]) : right.push(arr[i]);
+  };
+  console.log(`left: ${left}, right: ${right}, arr: ${arr}, pivot: ${pivot}`);
+  return quickSort(left).concat(String(pivot), quickSort(right));
 }
 
 function Sort() {
+  const param = useParams();
   const array: MutableRefObject<HTMLInputElement> = useRef();
   const [orderArray, setOrderArray] = useState<string>();
 
   function inputHandler(e: SyntheticEvent) {
     e.preventDefault();
     if (array.current.value) {
-      const strSort = selectedSort(
-        array.current.value.split(",").map((item) => Number(item)),
-      );
-      setOrderArray(strSort);
+      if (param.id === "selected") {
+        const strSort = selectedSort(
+          array.current.value.split(",").map((item) => Number(item)),
+        );
+        setOrderArray(strSort);
+      } else {
+        const strSort = quickSort(
+          array.current.value.split(",").map((item) => Number(item)),
+        );
+        setOrderArray(strSort);
+      }
     }
   }
 
