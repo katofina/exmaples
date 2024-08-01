@@ -16,16 +16,16 @@ function selectedSort(arr: number[]): string {
     console.log(arr);
   }
   return arr.join(",");
-};
+}
 
 function quickSort(arr: number[]): string {
-  if (arr.length <= 1) return arr.join(',');
+  if (arr.length <= 1) return arr.join(",");
   const pivot = arr[0];
   const left = [];
   const right = [];
   for (let i = 1; i < arr.length; i++) {
     arr[i] < pivot ? left.push(arr[i]) : right.push(arr[i]);
-  };
+  }
   console.log(`left: ${left}, right: ${right}, arr: ${arr}, pivot: ${pivot}`);
   return quickSort(left).concat(String(pivot), quickSort(right));
 }
