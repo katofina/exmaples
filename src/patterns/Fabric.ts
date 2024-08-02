@@ -32,7 +32,7 @@ class High {
   decrease() {
     this.height--;
   }
-} //There are several constructors which we need to use:
+} //There are several constructors that we need to use:
 //const newHigh = new High(5); const newMiddle = new Middle(5); const newLow = new Low(5);
 
 const classFactory = {
