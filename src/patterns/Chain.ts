@@ -9,7 +9,7 @@ class Query {
 }
 
 class Handler {
-  handleRequest(request: Query) {
+  handlerRequest(request: Query) {
     console.log(request);
   }
   setNextHandler(handler: Handler) {
@@ -27,8 +27,9 @@ class HandlerUser extends Handler {
     if (request.priority === USER) {
       console.log("Handle request by userHandler");
     } else if (this.nextHandler !== null) {
-      this.nextHandler.handleRequest(request);
-    }
+      this.nextHandler.handlerRequest(request);
+      console.log()
+    } else console.log("Request can not be handled");
   }
 }
 
@@ -45,7 +46,11 @@ const handlerAdmin = new HandlerAdmin();
 const request = new Query(USER);
 const request2 = new Query(ADMIN);
 handlerUser.setNextHandler(handlerAdmin);
+console.log('user, user');
 handlerUser.handlerRequest(request);
+console.log('user, admin');
 handlerUser.handlerRequest(request2);
+console.log('admin, user');
 handlerAdmin.handlerRequest(request);
+console.log('admin, admin');
 handlerAdmin.handlerRequest(request2);
